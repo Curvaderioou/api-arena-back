@@ -66,7 +66,7 @@ async function updateReserveService(id, client, reservedDate, description) {
   }
   const reserveItem = await reserveRepositories.findReserveByIdRepository(id);
   if (!reserveItem) {
-    throw new Error("News not found");
+    throw new Error("Reserve not found");
   }
   await reserveRepositories.updateReserveRespository(
     id,

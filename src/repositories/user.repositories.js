@@ -1,10 +1,10 @@
 import User from "../models/User.js";
 
-const findByNameUserRepository = (name) => User.findOne({ name: name });
+const findByEmailUserRepository = (email) => User.findOne({ email: email });
 
-const createUserRepository = ({ name, password }) =>
+const createUserRepository = ({ email, password }) =>
   User.create({
-    name,
+    email,
     password,
   });
 
@@ -16,5 +16,5 @@ export default {
   createUserRepository,
   findAllUserRepository,
   findByIdUserRepository,
-  findByNameUserRepository,
+  findByEmailUserRepository,
 };
