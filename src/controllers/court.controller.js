@@ -21,4 +21,18 @@ async function findAllCourtsController(req, res) {
   }
 }
 
-export default { createCourtController, findAllCourtsController };
+async function findCourtByIdController(req, res) {
+  const id = req.params.id;
+  try {
+    const court = await courtService.findCourtByIdService(id);
+    return res.send(court);
+  } catch (e) {
+    res.status(500).send(e.message);
+  }
+}
+
+export default {
+  createCourtController,
+  findAllCourtsController,
+  findCourtByIdController,
+};

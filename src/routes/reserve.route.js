@@ -16,5 +16,6 @@ reserveRouter.get(
   reserveController.findReserveByCourtIdController
 );
 reserveRouter.patch("/update/:id", reserveController.updateReserveController);
+reserveRouter.delete("/delete/:id", reserveController.deleteReserveController);
 
 export default reserveRouter;

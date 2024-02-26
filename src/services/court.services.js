@@ -21,4 +21,13 @@ async function findAllCourtsService() {
   };
 }
 
-export default { createCourtService, findAllCourtsService };
+async function findCourtByIdService(id) {
+  const court = await courtRepositories.findByIdCourtRepository(id);
+  return court;
+}
+
+export default {
+  createCourtService,
+  findAllCourtsService,
+  findCourtByIdService,
+};

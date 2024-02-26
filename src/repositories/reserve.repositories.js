@@ -1,7 +1,17 @@
 import Reserve from "../models/Reserve.js";
 
-function createReserveRepository(client, reservedDate, description, court) {
+async function createReserveRepository(
+  client,
+  reservedDate,
+  description,
+  court
+) {
   return Reserve.create({ client, reservedDate, description, court });
+}
+
+async function existingReserveRepository(court, reservedDate) {
+  const existingReserve = await Reserve.findOne({ court, reservedDate });
+  return !!existingReserve;
 }
 
 function findAllReservesRepository() {
@@ -38,10 +48,16 @@ async function updateReserveRespository(id, client, reservedDate, description) {
   }
 }
 
+async function deleteReserveRepository(id) {
+  return Reserve.findOneAndDelete({ _id: id });
+}
+
 export default {
   createReserveRepository,
   findAllReservesRepository,
   findReserveByCourtIdRepository,
   findReserveByIdRepository,
   updateReserveRespository,
+  deleteReserveRepository,
+  existingReserveRepository,
 };

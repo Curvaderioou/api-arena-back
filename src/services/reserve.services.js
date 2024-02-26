@@ -6,19 +6,32 @@ async function createReserveService({
   description,
   court,
 }) {
-  if (!client || !reservedDate || !description || !court) {
-    throw new Error("Submit all fields for registration");
+  try {
+    if (!client || !reservedDate || !court) {
+      throw new Error("Submit all fields for registration");
+    }
+
+    const { id } = await reserveRepositories.createReserveRepository(
+      client,
+      reservedDate,
+      description,
+      court
+    );
+    return {
+      message: "Reserve created successfully!",
+      reserve: { id, client, reservedDate, description, court },
+    };
+  } catch (e) {
+    return e.message;
   }
-  const { id } = await reserveRepositories.createReserveRepository(
-    client,
-    reservedDate,
-    description,
-    court
+}
+
+async function existingReserveService(court, reservedDate) {
+  const response = await reserveRepositories.existingReserveRepository(
+    court,
+    reservedDate
   );
-  return {
-    message: "Reserve created successfully!",
-    reserve: { id, client, reservedDate, description, court },
-  };
+  return response;
 }
 
 async function findAllReservesService() {
@@ -81,10 +94,18 @@ async function updateReserveService(id, client, reservedDate, description) {
   return { reserveUpdated, message: "Reserve updated successfully" };
 }
 
+async function deleteReserveService(id) {
+  const reserveItem = await reserveRepositories.findReserveByIdRepository(id);
+  if (!reserveItem) throw new Error("Reserve not found");
+  await reserveRepositories.deleteReserveRepository(id);
+}
+
 export default {
   createReserveService,
   findAllReservesService,
   findReserveByCourtIdService,
   updateReserveService,
   findReserveByIdService,
+  deleteReserveService,
+  existingReserveService,
 };

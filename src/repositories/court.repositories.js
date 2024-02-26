@@ -5,7 +5,13 @@ function createCourtRepository(name) {
 }
 
 function findAllCourtsRepository() {
-  return Court.find().sort({ _id: -1 });
+  return Court.find().sort({ _id: 1 });
 }
 
-export default { createCourtRepository, findAllCourtsRepository };
+const findByIdCourtRepository = (id) => Court.findById(id);
+
+export default {
+  createCourtRepository,
+  findAllCourtsRepository,
+  findByIdCourtRepository,
+};
