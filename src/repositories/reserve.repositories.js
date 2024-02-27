@@ -47,7 +47,7 @@ function findReserveByIdRepository(id) {
   return Reserve.findById(id).populate("court");
 }
 
-async function updateReserveRespository(id, client, reservedDate, description) {
+async function updateReserveRespository(id, client) {
   try {
     const updatedReserve = await Reserve.findOneAndUpdate(
       {
@@ -55,8 +55,6 @@ async function updateReserveRespository(id, client, reservedDate, description) {
       },
       {
         client,
-        reservedDate,
-        description,
       },
       { new: true }
     );

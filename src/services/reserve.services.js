@@ -88,23 +88,18 @@ async function findReserveByCourtIdService(id) {
   };
 }
 
-async function updateReserveService(id, client, reservedDate, description) {
-  if (!client && !reservedDate && !description) {
-    throw new Error("Submit at least one field to update the reserve");
-  }
+async function updateReserveService(id, client) {
   const reserveItem = await reserveRepositories.findReserveByIdRepository(id);
   if (!reserveItem) {
     throw new Error("Reserve not found");
   }
-  await reserveRepositories.updateReserveRespository(
-    id,
-    client,
-    reservedDate,
-    description
-  );
+  await reserveRepositories.updateReserveRespository(id, client);
   const reserveUpdated = await reserveRepositories.findReserveByIdRepository(
     id
   );
+
+  // console.log(reserveItem);
+  // console.log(reserveUpdated);
 
   return { reserveUpdated, message: "Reserve updated successfully" };
 }

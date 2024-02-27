@@ -65,16 +65,11 @@ async function findReserveByCourtIdController(req, res) {
 }
 
 async function updateReserveController(req, res) {
-  const { client, reservedDate, description } = req.body;
+  const { client } = req.body;
   const { id } = req.params;
 
   try {
-    const response = await reserveService.updateReserveService(
-      id,
-      client,
-      reservedDate,
-      description
-    );
+    const response = await reserveService.updateReserveService(id, client);
     return res.send(response);
   } catch (e) {
     return res.status(500).send(e.message);
