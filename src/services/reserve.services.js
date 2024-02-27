@@ -47,6 +47,21 @@ async function findAllReservesService() {
   };
 }
 
+async function findAllReservesOnDateService(date) {
+  const reserve = await reserveRepositories.findAllReservesOnDateRepository(
+    date
+  );
+  return {
+    results: reserve.map((reserveItem) => ({
+      id: reserveItem.id,
+      client: reserveItem.client,
+      reservedDate: reserveItem.reservedDate,
+      description: reserveItem.description,
+      court: reserveItem.court,
+    })),
+  };
+}
+
 async function findReserveByIdService(id) {
   const reserve = await reserveRepositories.findReserveByIdRepository(id);
   return {
@@ -65,7 +80,7 @@ async function findReserveByCourtIdService(id) {
   return {
     reservesByCourt: reserve.map((reserveItem) => ({
       id: reserveItem._id,
-      cclient: reserveItem.client,
+      client: reserveItem.client,
       reservedDate: reserveItem.reservedDate,
       description: reserveItem.description,
       court: reserveItem.court,
@@ -108,4 +123,5 @@ export default {
   findReserveByIdService,
   deleteReserveService,
   existingReserveService,
+  findAllReservesOnDateService,
 };

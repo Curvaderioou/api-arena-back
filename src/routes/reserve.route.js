@@ -6,6 +6,7 @@ import { Router } from "express";
 const reserveRouter = Router();
 
 reserveRouter.get("/", reserveController.findAllReservesController);
+reserveRouter.get("/date", reserveController.findAllReservesOnDateController);
 
 reserveRouter.use(authMiddleware);
 

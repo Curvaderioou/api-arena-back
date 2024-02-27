@@ -35,6 +35,15 @@ async function findAllReservesController(req, res) {
   }
 }
 
+async function findAllReservesOnDateController(req, res) {
+  const { date } = req.query;
+  try {
+    const reserve = await reserveService.findAllReservesOnDateService(date);
+    return res.send(reserve);
+  } catch (e) {
+    res.status(500).send(e.message);
+  }
+}
 async function findReserveByIdController(req, res) {
   try {
     const id = req.params.id;
@@ -89,4 +98,5 @@ export default {
   updateReserveController,
   findReserveByIdController,
   deleteReserveController,
+  findAllReservesOnDateController,
 };
