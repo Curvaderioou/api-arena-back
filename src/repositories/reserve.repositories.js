@@ -1,12 +1,7 @@
 import Reserve from "../models/Reserve.js";
 
-async function createReserveRepository(
-  client,
-  reservedDate,
-  description,
-  court
-) {
-  return Reserve.create({ client, reservedDate, description, court });
+async function createReserveRepository(client, reservedDate, court) {
+  return Reserve.create({ client, reservedDate, court });
 }
 
 async function existingReserveRepository(court, reservedDate) {
@@ -35,6 +30,12 @@ function findAllReservesOnDateRepository(date) {
   }).sort({ reservedDate: 1 });
 
   return response;
+}
+
+function searchReservesByClientRepository(client) {
+  return Reserve.find({
+    client: { $regex: `${client || ""}`, $options: "i" },
+  }).sort({ reservedDate: 1 });
 }
 
 function findReserveByCourtIdRepository(id) {
@@ -80,4 +81,5 @@ export default {
   deleteReserveRepository,
   existingReserveRepository,
   findAllReservesOnDateRepository,
+  searchReservesByClientRepository,
 };

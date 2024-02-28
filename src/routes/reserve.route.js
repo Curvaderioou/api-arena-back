@@ -7,6 +7,10 @@ const reserveRouter = Router();
 
 reserveRouter.get("/", reserveController.findAllReservesController);
 reserveRouter.get("/date", reserveController.findAllReservesOnDateController);
+reserveRouter.get(
+  "/search",
+  reserveController.searchReservesByClientController
+);
 
 reserveRouter.use(authMiddleware);
 

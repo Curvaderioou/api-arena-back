@@ -1,6 +1,6 @@
 import mongoose from "mongoose";
 
-const ReserveSchema = new mongoose.Schema({
+const ArchiveSchema = new mongoose.Schema({
   client: {
     type: String,
     required: true,
@@ -16,6 +16,6 @@ const ReserveSchema = new mongoose.Schema({
   },
 });
 
-const Reserve = mongoose.model("Reserve", ReserveSchema);
+const Archive = mongoose.model("Archive", ArchiveSchema);
 
-export default Reserve;
+export default Archive;

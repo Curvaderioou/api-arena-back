@@ -1,7 +1,7 @@
 import reserveService from "../services/reserve.services.js";
 
 async function createReserveController(req, res) {
-  const { client, reservedDate, description, court } = req.body;
+  const { client, reservedDate, court } = req.body;
 
   const existingReserveVar = await reserveService.existingReserveService(
     court,
@@ -17,7 +17,6 @@ async function createReserveController(req, res) {
     const reserve = await reserveService.createReserveService({
       client,
       reservedDate,
-      description,
       court,
     });
     return res.status(201).send(reserve);
@@ -51,6 +50,18 @@ async function findReserveByIdController(req, res) {
     return res.send(reserve);
   } catch (e) {
     res.status(500).send(e.message);
+  }
+}
+
+async function searchReservesByClientController(req, res) {
+  const { client } = req.query;
+  try {
+    const foundReserve = await reserveService.searchReservesByClientService(
+      client
+    );
+    return res.send(foundReserve);
+  } catch (e) {
+    return res.send(e.message);
   }
 }
 
@@ -94,4 +105,5 @@ export default {
   findReserveByIdController,
   deleteReserveController,
   findAllReservesOnDateController,
+  searchReservesByClientController,
 };

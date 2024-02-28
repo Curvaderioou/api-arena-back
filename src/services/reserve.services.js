@@ -1,11 +1,6 @@
 import reserveRepositories from "../repositories/reserve.repositories.js";
 
-async function createReserveService({
-  client,
-  reservedDate,
-  description,
-  court,
-}) {
+async function createReserveService({ client, reservedDate, court }) {
   try {
     if (!client || !reservedDate || !court) {
       throw new Error("Submit all fields for registration");
@@ -14,12 +9,11 @@ async function createReserveService({
     const { id } = await reserveRepositories.createReserveRepository(
       client,
       reservedDate,
-      description,
       court
     );
     return {
       message: "Reserve created successfully!",
-      reserve: { id, client, reservedDate, description, court },
+      reserve: { id, client, reservedDate, court },
     };
   } catch (e) {
     return e.message;
@@ -41,7 +35,6 @@ async function findAllReservesService() {
       id: reserveItem.id,
       client: reserveItem.client,
       reservedDate: reserveItem.reservedDate,
-      description: reserveItem.description,
       court: reserveItem.court,
     })),
   };
@@ -56,10 +49,29 @@ async function findAllReservesOnDateService(date) {
       id: reserveItem.id,
       client: reserveItem.client,
       reservedDate: reserveItem.reservedDate,
-      description: reserveItem.description,
       court: reserveItem.court,
     })),
   };
+}
+
+async function searchReservesByClientService(client) {
+  try {
+    const foundReserve =
+      await reserveRepositories.searchReservesByClientRepository(client);
+    if (foundReserve.length === 0) {
+      throw new Error("There are no reserves with this client");
+    }
+    return {
+      foundReserve: foundReserve.map((reserveItem) => ({
+        id: reserveItem._id,
+        client: reserveItem.client,
+        reservedDate: reserveItem.reservedDate,
+        court: reserveItem.court,
+      })),
+    };
+  } catch (e) {
+    return e.message;
+  }
 }
 
 async function findReserveByIdService(id) {
@@ -69,7 +81,6 @@ async function findReserveByIdService(id) {
       id: reserve.id,
       client: reserve.client,
       reservedDate: reserve.reservedDate,
-      description: reserve.description,
       court: reserve.court,
     },
   };
@@ -82,7 +93,6 @@ async function findReserveByCourtIdService(id) {
       id: reserveItem._id,
       client: reserveItem.client,
       reservedDate: reserveItem.reservedDate,
-      description: reserveItem.description,
       court: reserveItem.court,
     })),
   };
@@ -97,10 +107,6 @@ async function updateReserveService(id, client) {
   const reserveUpdated = await reserveRepositories.findReserveByIdRepository(
     id
   );
-
-  // console.log(reserveItem);
-  // console.log(reserveUpdated);
-
   return { reserveUpdated, message: "Reserve updated successfully" };
 }
 
@@ -119,4 +125,5 @@ export default {
   deleteReserveService,
   existingReserveService,
   findAllReservesOnDateService,
+  searchReservesByClientService,
 };
