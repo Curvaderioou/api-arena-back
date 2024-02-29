@@ -3,7 +3,7 @@ import reserveRouter from "./reserve.route.js";
 import courtRouter from "./court.route.js";
 import userRouter from "./user.route.js";
 import authRouter from "./auth.route.js";
-import archiveRouter from "./Archive.route.js";
+import archiveRouter from "./archive.route.js";
 
 const router = Router();
 
