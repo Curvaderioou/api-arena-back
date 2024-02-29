@@ -17,11 +17,7 @@ function findAllReservesOnDateRepository(date) {
   const startOfDay = new Date(date);
 
   const endOfDay = new Date(date);
-  console.log(endOfDay);
   endOfDay.setHours(23, 59, 59, 999);
-  console.log(endOfDay);
-  endOfDay.setDate(endOfDay.getDate() + 1);
-  console.log(endOfDay);
 
   const response = Reserve.find({
     reservedDate: {
