@@ -44,7 +44,6 @@ async function findAllReservesOnDateService(date) {
   const reserve = await reserveRepositories.findAllReservesOnDateRepository(
     date
   );
-  console.log(reserve);
   return {
     results: reserve.map((reserveItem) => ({
       id: reserveItem.id,
