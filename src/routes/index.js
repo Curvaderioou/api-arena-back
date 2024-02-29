@@ -6,7 +6,7 @@ import authRouter from "./auth.route.js";
 import archiveRouter from "./archive.route.js";
 
 const router = Router();
-// teste
+
 router.use("/reserve", reserveRouter);
 router.use("/court", courtRouter);
 router.use("/user", userRouter);
