@@ -12,9 +12,10 @@ const loginService = async ({ email, password }) => {
 
   if (!user) throw new Error("Wrong password or email");
 
+  errorMessage = "incorreto";
+
   const isPasswordValid = await bcrypt.compare(password, user.password);
-  console.log(isPasswordValid, password, user.password);
-  if (!isPasswordValid) throw new Error("Invalid password or email");
+  if (!isPasswordValid) return errorMessage;
 
   const token = generateToken(user.id);
 
